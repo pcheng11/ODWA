@@ -1,7 +1,7 @@
 __author__ = 'victor cheng'
 
 from flask import Flask, render_template
-from flask_images import Images
+# from flask_images import Images
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
@@ -28,7 +28,7 @@ def create_app():
     db.init_app(app)
     Bootstrap(app)
     login_manager.init_app(app)
-    images = Images(app)
+    # images = Images(app)
 
     Migrate(app, db)
     with app.app_context():
