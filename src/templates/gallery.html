@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+{% if not photo_names%}
+<div>
+    <h1>No images</h1>
+</div>
+{% else %}
+<h1 class="font-weight-light text-center text-sm-center mt-4 mb-0">Your Gallery</h1>
+
+<hr class="mt-2 mb-5">
+    <div class="row">
+    {% for name in photo_names %}
+        {% set path = prefix + name[0] %}
+    
+        <div class="col-md-3">
+            <a href="{{ url_for('users.img', name=name[0])}}">
+                <img src="{{ path }}" class="img-thumbnail" width="200" height="200"/>
+            </a>
+        </div>
+        
+            <!-- if last column in row -->
+        {% if loop.index %4 == 0 and not loop.last %}
+        </div> <div class="row">
+        {% endif %}
+        
+    {% endfor %}
+    </div>
+{% endif %}
+</div>
+{% endblock %}
