@@ -8,6 +8,9 @@ from config.config import IMAGE_URL_PREFIX
 
 user_blueprint = Blueprint('users', __name__)
 
+'''
+    sign up route
+'''
 @user_blueprint.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignupForm(request.form)
@@ -23,6 +26,9 @@ def signup():
     return render_template('/signup.html', form=form)
 
 
+'''
+    log in route
+'''
 @user_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
@@ -36,15 +42,19 @@ def login():
             flash('Invalid username/password combination')
     return render_template('login.html', form=form)
 
-
+'''
+    user's gallery route, login required
+'''
 @user_blueprint.route('/gallery', methods=['GET'])
 @login_required
 def gallery():
     picnames = get_picnames()
-    print(picnames)
     return render_template("gallery.html", picnames=picnames, prefix=IMAGE_URL_PREFIX)
 
 
+'''
+    log out route, login required
+'''
 @user_blueprint.route('/logout', methods=['GET'])
 @login_required
 def logout():
@@ -52,12 +62,18 @@ def logout():
     return redirect(url_for('landing.landing'))
 
 
+'''
+    profile route, login required
+'''
 @user_blueprint.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
     return render_template('profile.html', user=current_user.username)
 
 
+'''
+    img route, login required
+'''
 @user_blueprint.route('/img/<string:picname>', methods=['GET'])
 @login_required
 def img(picname):
@@ -65,7 +81,9 @@ def img(picname):
                 IMAGE_URL_PREFIX + 'detected-' + picname)
     return render_template("img.html", picnames=picnames)
 
-
+'''
+    actual register helper function
+'''
 def register(password, username):
     existing_user = User.query.filter_by(username=username).first()
     if existing_user is None:
@@ -77,6 +95,9 @@ def register(password, username):
     return False
 
 
+'''
+    actual log in helper function
+'''
 def login(password, username):
     # check username
     existing_user = User.query.filter_by(username=username).first()
@@ -86,6 +107,10 @@ def login(password, username):
             return True
     return False
 
+
+'''
+    helper function for getting all uploaded pic names of a user
+'''
 def get_picnames():
     picnames = Photo.query.with_entities(Photo.picname).filter_by(userid=current_user.id).all()
     return picnames

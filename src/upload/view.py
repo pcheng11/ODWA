@@ -14,10 +14,12 @@ upload_blueprint = Blueprint('upload', __name__)
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'}
 
 
+'''
+    uoload route, login required
+'''
 @upload_blueprint.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
-    print(Photo.query.all())
     success = False
     pic_path = None
     detected_pic_path = None
@@ -41,6 +43,10 @@ def allowed_file(filename):
     return '.' in filename and \
             filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+'''
+    actual file saving and db saving function
+'''
 def db_save_and_s3_save(file):
     content = file.read()
     picname = 'user-' + str(current_user.id) + '-' + file.filename
@@ -58,7 +64,6 @@ def db_save_and_s3_save(file):
         db.session.commit()
 
     # save to s3
-    print(pic_path)
     s3.Bucket('odwa').put_object(Key=picname, Body=content)
     s3.Bucket('odwa').put_object(Key=detected_picname, Body=detected_img)
     return pic_path, detected_pic_path

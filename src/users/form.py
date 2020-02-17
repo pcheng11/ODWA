@@ -3,11 +3,13 @@ from wtforms import (Form, StringField,
                      PasswordField,
                      DateField)
 from wtforms.validators import (DataRequired,
+                                Length,
                                 Email,
                                 EqualTo)
 
 class SignupForm(Form):
-    username = StringField('Username', [DataRequired()])
+    username = StringField('Username', [DataRequired(), Length(
+        min=1, max=100, message="Username length not correct")])
     password = PasswordField('Password', [DataRequired(message="Please enter a password")])
     confirmPassword = PasswordField('Repeat Password', [DataRequired(), EqualTo('password', message='Passwords must match')])
     submit = SubmitField('Sign Up')

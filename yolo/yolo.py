@@ -1,6 +1,3 @@
-# USAGE
-# python yolo.py --image images/baggage_claim.jpg --yolo yolo-coco
-
 # import the necessary packages
 import numpy as np
 import cv2

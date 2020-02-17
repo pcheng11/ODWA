@@ -2,6 +2,10 @@ from src import net, LABELS, COLORS, s3, lock
 import cv2
 import numpy as np
 
+
+'''
+    Yolo detect function (lock)
+'''
 def detect(content, ext):
     #convert string data to numpy array
     lock.acquire()
