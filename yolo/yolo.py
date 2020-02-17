@@ -21,6 +21,4 @@ def init_yolo():
 	# load our YOLO object detector trained on COCO dataset (80 classes)
 	print("[INFO] loading YOLO from disk...")
 	net = cv2.dnn.readNetFromDarknet(configPath, weightsPath)
-	ln = net.getLayerNames()
-	ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
-	return ln, net, LABELS, COLORS
+	return net, LABELS, COLORS

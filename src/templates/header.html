@@ -9,12 +9,18 @@
         <div class="collapse navbar-collapse" id="navbarColor03">
 
             <div class="navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav">
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('upload.upload') }}" role="button">upload</a>
+                        <a class="nav-link" href="{{ url_for('users.gallery') }}" role="button">Gallery</a>
                     </li>
-                    
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('upload.upload') }}" role="button">upload</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('users.logout') }}">Log Out</a>
                         </li>

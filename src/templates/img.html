@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-{% for name in photo_names %}
-    <div id=div2 class="d-flex justify-content-around" style="height: 100vh">
-            <img style="max-width:100%" src="{{ prefix + name[0] }}" width="50%" height="50%" />
-            <img src="{{ prefix + name[1] }}" width="50%" height="50%"/>
+<div style="text-align: center;">
+    <h2> Original Image </h2>
+    <div style="text-align: center;">
+        <img src="{{ picnames[0] }}" />
     </div>
-{% endfor %}
+    <h2> Detected Image </h2>
+    <div style="text-align: center;">
+        <img src="{{ picnames[1] }}" />
+    </div>
+</div>
+   
 {% endblock %}

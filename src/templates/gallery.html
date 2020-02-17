@@ -1,32 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-fluid">
-{% if not photo_names%}
-<div>
-    <h1>No images</h1>
-</div>
-{% else %}
-<h1 class="font-weight-light text-center text-sm-center mt-4 mb-0">Your Gallery</h1>
-
-<hr class="mt-2 mb-5">
-    <div class="row">
-    {% for name in photo_names %}
-        {% set path = prefix + name[0] %}
-    
-        <div class="col-md-3">
-            <a href="{{ url_for('users.img', name=name[0])}}">
-                <img src="{{ path }}" class="img-thumbnail" width="200" height="200"/>
-            </a>
-        </div>
-        
-            <!-- if last column in row -->
-        {% if loop.index %4 == 0 and not loop.last %}
-        </div> <div class="row">
-        {% endif %}
-        
-    {% endfor %}
+<div class="container-fluid" style="text-align: center;">
+{% if not picnames%}
+    <div>
+        <h1>No images</h1>
     </div>
+{% else %}
+    <h1 class="font-weight-light text-center text-sm-center mt-4 mb-0">Your Gallery</h1>
+
+    <hr class="mt-2 mb-5">
+    <div class="row text-center text-lg-left">
+    
+        {% for picname in picnames %}
+            {% set path = prefix ~ picname[0] %}
+            <div class="col-lg-3 col-md-4 col-6">
+                <a class="d-block mb-4 h-100" href="{{ url_for('users.img', picname=picname[0])}}">
+                    <img src="{{ path }}" class="img-fluid img-thumbnail"/>
+                </a>
+            </div>
+            
+                <!-- if last column in row -->
+            {% if loop.index %4 == 0 and not loop.last %}
+                </div> <div class="row text-center text-lg-left">
+            {% endif %}
+            
+        {% endfor %}
+    </div>
+    <style>
+        div.imagetiles div.col-lg-3 .col-md-4 .col-6 {
+            padding: 1px;
+        }
+    </style>
 {% endif %}
 </div>
 {% endblock %}

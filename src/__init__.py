@@ -1,6 +1,6 @@
 __author__ = 'victor cheng'
 
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 # from flask_images import Images
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -18,7 +18,8 @@ login_manager = LoginManager()
 s3 = boto3.resource('s3', aws_access_key_id=AWS_ACCESS_KEY,
                     aws_secret_access_key=AWS_SECRET_KEY,
                     aws_session_token=AWS_SESSION_TOKEN)
-ln, net, LABELS, COLORS = init_yolo()
+                    
+net, LABELS, COLORS = init_yolo()
 
 def create_app():
     app = Flask(__name__)
@@ -37,9 +38,11 @@ def create_app():
         from .landing.view import landing_blueprint
         from .users.view import user_blueprint
         from .upload.view import upload_blueprint
+        from .api.api import api_blueprint
         app.register_blueprint(landing_blueprint)
         app.register_blueprint(user_blueprint, url_prefix='/users')
         app.register_blueprint(upload_blueprint)
+        app.register_blueprint(api_blueprint, url_prefix='/api')
         # Create Database Models
         db.create_all()
 

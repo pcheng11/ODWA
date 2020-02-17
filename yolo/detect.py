@@ -1,9 +1,12 @@
-from src import ln, net, LABELS, COLORS, s3
+from src import net, LABELS, COLORS, s3
 import cv2
 import numpy as np
 
 def detect(content, ext):
     #convert string data to numpy array
+    
+    ln = net.getLayerNames()
+    ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
     npimg = np.fromstring(content, np.uint8)
     # convert numpy array to image
     image = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
