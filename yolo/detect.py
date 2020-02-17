@@ -1,10 +1,10 @@
-from src import net, LABELS, COLORS, s3
+from src import net, LABELS, COLORS, s3, lock
 import cv2
 import numpy as np
 
 def detect(content, ext):
     #convert string data to numpy array
-    
+    lock.acquire()
     ln = net.getLayerNames()
     ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
     npimg = np.fromstring(content, np.uint8)
@@ -15,6 +15,7 @@ def detect(content, ext):
         swapRB=True, crop=False)
     net.setInput(blob)
     layerOutputs = net.forward(ln)
+    lock.release()
     boxes = []
     confidences = []
     classIDs = []

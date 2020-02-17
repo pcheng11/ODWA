@@ -26,7 +26,6 @@ def api_upload():
     username = request.form['username']
     password = request.form['password']
     file = request.files['file']
-    print(username)
     if login(password, username):
         if allowed_file(file.filename):
             db_save_and_s3_save(file)

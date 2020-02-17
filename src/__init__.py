@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from flask_session import Session
+import threading
 import boto3
 from config.config import AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_SESSION_TOKEN
 from yolo.yolo import init_yolo
@@ -18,8 +19,9 @@ login_manager = LoginManager()
 s3 = boto3.resource('s3', aws_access_key_id=AWS_ACCESS_KEY,
                     aws_secret_access_key=AWS_SECRET_KEY,
                     aws_session_token=AWS_SESSION_TOKEN)
-                    
+
 net, LABELS, COLORS = init_yolo()
+lock = threading.Lock()
 
 def create_app():
     app = Flask(__name__)
