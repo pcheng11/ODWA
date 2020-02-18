@@ -2,7 +2,6 @@ __author__ = 'victor cheng'
 
 import boto3
 import threading
-from config.config import AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_SESSION_TOKEN
 from datetime import timedelta
 from flask import Flask, render_template, jsonify, session
 from flask_login import LoginManager
@@ -15,9 +14,7 @@ from yolo.yolo import init_yolo
 app = Flask(__name__)
 db = SQLAlchemy()
 login_manager = LoginManager()
-s3 = boto3.resource('s3', aws_access_key_id=AWS_ACCESS_KEY,
-                    aws_secret_access_key=AWS_SECRET_KEY,
-                    aws_session_token=AWS_SESSION_TOKEN)
+s3 = boto3.resource('s3')
 
 net, LABELS, COLORS = init_yolo()
 lock = threading.Lock()

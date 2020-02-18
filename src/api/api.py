@@ -20,7 +20,7 @@ def api_register():
     else:
         return jsonify({
             "status": 400,
-            "text": "Register Failed"
+            "text": "Register Failed. User Already Exists"
         }), 400
 
 
