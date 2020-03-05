@@ -1,7 +1,11 @@
 import os
 from datetime import timedelta
-basedir = os.path.abspath(os.path.dirname(__file__ + "/../../"))
-SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'ODWA.db')
+DB_PASSWORD = 'WBGCI3ElWecukBooRzaH'
+DB_ENDPOINT = 'odwa-db.c8he8i54iqnw.us-east-1.rds.amazonaws.com'
+DB_MASTER = 'admin'
+DB_NAME = 'odwadb'
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}/{}'.format(DB_MASTER, DB_PASSWORD, DB_ENDPOINT, DB_NAME)
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SECRET_KEY = "ODWA"
 IMAGE_URL_PREFIX = 'https://odwa.s3.amazonaws.com/'
+
