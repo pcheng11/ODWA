@@ -23,7 +23,7 @@ ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'}
 @upload_blueprint.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
-    record_http_request(timeStamp=datetime.now())
+    record_http_request(datetime.now())
     success = False
     pic_path = None
     detected_pic_path = None

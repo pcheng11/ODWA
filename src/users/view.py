@@ -15,6 +15,7 @@ user_blueprint = Blueprint('users', __name__)
 '''
 @user_blueprint.route('/signup', methods=['GET', 'POST'])
 def signup():
+    record_http_request(datetime.now())
     form = SignupForm(request.form)
     print(User.query.all())
     if request.method == "POST":
@@ -51,6 +52,7 @@ def login():
 @user_blueprint.route('/gallery', methods=['GET'])
 @login_required
 def gallery():
+    record_http_request(datetime.now())
     picnames = get_picnames()
     return render_template("gallery.html", picnames=picnames, prefix=IMAGE_URL_PREFIX)
 
@@ -61,6 +63,7 @@ def gallery():
 @user_blueprint.route('/logout', methods=['GET'])
 @login_required
 def logout():
+    record_http_request(datetime.now())
     logout_user()
     return redirect(url_for('landing.landing'))
 
@@ -71,6 +74,7 @@ def logout():
 @user_blueprint.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    record_http_request(datetime.now())
     return render_template('profile.html', user=current_user.username)
 
 
@@ -80,6 +84,7 @@ def profile():
 @user_blueprint.route('/img/<string:picname>', methods=['GET'])
 @login_required
 def img(picname):
+    record_http_request(datetime.now())
     picnames = (IMAGE_URL_PREFIX + picname,
                 IMAGE_URL_PREFIX + 'detected-' + picname)
     return render_template("img.html", picnames=picnames)

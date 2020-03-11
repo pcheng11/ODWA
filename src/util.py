@@ -16,7 +16,8 @@ def record_http_request(timeStamp):
                 ],
                 'Timestamp': timeStamp,
                 'Value': 1,
-                'StorageResolution': 60
+                'StorageResolution': 60,
+                'Unit': 'Count'
             },
         ]
     )

@@ -2,6 +2,8 @@ from src import app
 from flask import request, jsonify, Blueprint
 from ..users.view import register, login
 from ..upload.view import db_save_and_s3_save, allowed_file
+from src.util import record_http_request
+
 api_blueprint = Blueprint('api', __name__)
 
 
@@ -10,6 +12,7 @@ api route for register
 '''
 @api_blueprint.route('/register', methods=['POST'])
 def api_register():
+    record_http_request(datetime.now())
     username = request.form['username']
     password = request.form['password']
     if register(password, username):
@@ -29,6 +32,7 @@ api route for upload
 '''
 @api_blueprint.route('/upload', methods=['POST'])
 def api_upload():
+    record_http_request(datetime.now())
     username = request.form['username']
     password = request.form['password']
     file = request.files['file']
