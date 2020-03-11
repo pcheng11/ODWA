@@ -8,5 +8,4 @@ landing_blueprint = Blueprint('landing', __name__)
 '''
 @landing_blueprint.route('/')
 def landing():
-    record_http_request(datetime.now(), 'landing/')
     return render_template('landing.html', current_user=current_user)
