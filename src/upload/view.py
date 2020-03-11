@@ -1,14 +1,17 @@
+from config.config import IMAGE_URL_PREFIX
+from datetime import datetime
 from flask import Blueprint, request, session, url_for, render_template, redirect, flash, session
 from flask_login import login_required, current_user, login_user, logout_user
-from ..models import Photo
-from src import s3, db
-import boto3
-from config.config import IMAGE_URL_PREFIX
+from src import s3, db, s3_client
+from src.util import record_http_request
 from werkzeug.security import generate_password_hash, check_password_hash
 from yolo.detect import detect
+from ..models import Photo
+import boto3
 import copy
 import cv2
 import numpy as np
+
 upload_blueprint = Blueprint('upload', __name__)
 
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'}
@@ -20,6 +23,7 @@ ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'}
 @upload_blueprint.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
+    record_http_request(timeStamp=datetime.now())
     success = False
     pic_path = None
     detected_pic_path = None
@@ -41,12 +45,14 @@ def upload():
 # cite: https://flask.palletsprojects.com/en/1.1.x/patterns/fileuploads/
 def allowed_file(filename):
     return '.' in filename and \
-            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 '''
     actual file saving and db saving function
 '''
+
+
 def db_save_and_s3_save(file):
     content = file.read()
     picname = 'user-' + str(current_user.id) + '-' + file.filename

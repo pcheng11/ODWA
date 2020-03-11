@@ -1,5 +1,3 @@
-import os
-from datetime import timedelta
 DB_PASSWORD = 'WBGCI3ElWecukBooRzaH'
 DB_ENDPOINT = 'odwa-db.c8he8i54iqnw.us-east-1.rds.amazonaws.com'
 DB_MASTER = 'admin'

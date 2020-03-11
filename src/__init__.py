@@ -2,6 +2,7 @@ __author__ = 'victor cheng'
 
 import boto3
 import threading
+import os
 from datetime import timedelta
 from flask import Flask, render_template, jsonify, session
 from flask_login import LoginManager
@@ -15,10 +16,11 @@ app = Flask(__name__)
 db = SQLAlchemy()
 login_manager = LoginManager()
 s3 = boto3.resource('s3')
-
+s3_client = boto3.client('cloudwatch')
 net, LABELS, COLORS = init_yolo()
 lock = threading.Lock()
-
+instanceId = os.popen('ec2metadata --instance-id').read().strip()
+print(instanceId)
 
 def create_app():
     app = Flask(__name__)
