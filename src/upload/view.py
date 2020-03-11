@@ -2,7 +2,7 @@ from config.config import IMAGE_URL_PREFIX
 from datetime import datetime
 from flask import Blueprint, request, session, url_for, render_template, redirect, flash, session
 from flask_login import login_required, current_user, login_user, logout_user
-from src import s3, db, s3_client
+from src import s3, db
 from src.util import record_http_request
 from werkzeug.security import generate_password_hash, check_password_hash
 from yolo.detect import detect
