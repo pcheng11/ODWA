@@ -16,7 +16,10 @@ app = Flask(__name__)
 db = SQLAlchemy()
 login_manager = LoginManager()
 s3 = boto3.resource('s3')
-s3_client = boto3.client('cloudwatch')
+s3_client = boto3.client('cloudwatch', region_name='us-east-1',
+                         aws_access_key_id='ASIASSNXS3TDS3WP6HSM',
+                         aws_secret_access_key='cDtMP1/IpL63N84Dl4UYNZ/tfPHqM/pzo/NB+tn4',
+                         aws_session_token='FwoGZXIvYXdzEDMaDHjA+T4lexu92cNTcyLIAe0SbS4/vPLfejKzwekum8NY8IEUF29Sr6leenPN4Ukd1RzxU14l6K27FIV3HLIUSDAEdt4iEvpZyJVwcCoctDnYLMRgJKeqTtOv0j53eWthGDHpTZJQtGzzdxeQ2bP/vWER1+Z3bbJEDSxA4TPfQQyNBCkH7nDdHRzU7yIrRuTQlMEg338Gvuo1JmfJtMua6bXn0OHHRFufUFk1ld5ue3T5G6v5flVKXhR8ZIeU6tmkl2Y2bLq4iye//au33c3IZ82wt1JkvbSSKOCNofMFMi16Niz04xYLs3uXAETci7n8pu9LJrc+aweiy+saSpxy2AKxSG4RxoNjL7pCbxc=')
 net, LABELS, COLORS = init_yolo()
 lock = threading.Lock()
 instanceId = os.popen('ec2metadata --instance-id').read().strip()
