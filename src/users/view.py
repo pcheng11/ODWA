@@ -3,8 +3,10 @@ from flask_login import login_required, current_user, login_user, logout_user
 from .form import SignupForm, LoginForm
 from ..models import User, Photo
 from src import db
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from config.config import IMAGE_URL_PREFIX
+from src.util import record_http_request
 
 user_blueprint = Blueprint('users', __name__)
 
@@ -31,6 +33,7 @@ def signup():
 '''
 @user_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
+    record_http_request(datetime.now())
     form = LoginForm(request.form)
     if current_user.is_authenticated:
         return redirect(url_for('users.gallery'))
