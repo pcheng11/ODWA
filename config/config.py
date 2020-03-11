@@ -6,4 +6,7 @@ SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}/{}'.format(DB_MASTER, DB_PAS
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SECRET_KEY = "ODWA"
 IMAGE_URL_PREFIX = 'https://odwa.s3.amazonaws.com/'
-
+IAM_INSTANCE_PROFILE = {
+    'Arn':'arn:aws:iam::177015545031:role/FULL_ACCESS',
+    'Name':'FULL_ACCESS'
+}
