@@ -13,7 +13,7 @@ api route for register
 '''
 @api_blueprint.route('/register', methods=['POST'])
 def api_register():
-    record_http_request(datetime.now())
+    record_http_request(datetime.now(), 'api/register')
     username = request.form['username']
     password = request.form['password']
     if register(password, username):
@@ -33,7 +33,7 @@ api route for upload
 '''
 @api_blueprint.route('/upload', methods=['POST'])
 def api_upload():
-    record_http_request(datetime.now())
+    record_http_request(datetime.now(), 'api/upload')
     username = request.form['username']
     password = request.form['password']
     file = request.files['file']
