@@ -1,8 +1,7 @@
-from src import cw_client, instanceId
 from datetime import timedelta, datetime
 
 
-def record_http_request(timeStamp):
+def record_http_request(timeStamp, instanceId, cw_client):
     response = cw_client.put_metric_data(
         Namespace='AWS/EC2',
         MetricData=[

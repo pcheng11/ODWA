@@ -35,7 +35,7 @@ def create_app():
         session.permanent = True
         app.permanent_session_lifetime = timedelta(hours=24)
         print('request!!')
-        record_http_request(datetime.now())
+        record_http_request(datetime.now(), cw_client, instanceId)
     # Initialize Plugins
     db.init_app(app)
     Bootstrap(app)
