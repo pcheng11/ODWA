@@ -24,7 +24,7 @@ def record_http_request(timeStamp, route):
     )
 
 
-@periodic_task(run_every=timedelta(seconds=10))
+@periodic_task(run_every=timedelta(seconds=60))
 def periodically_record_http_request():
     response = cw_client.put_metric_data(
         Namespace='AWS/EC2',
