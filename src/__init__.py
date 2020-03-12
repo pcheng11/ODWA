@@ -5,7 +5,7 @@ import threading
 import os
 from celery import Celery
 from config import config
-from datetime import timedelta
+from datetime import timedelta, datetime
 from flask import Flask, render_template, jsonify, session
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -35,7 +35,7 @@ def create_app():
         session.permanent = True
         app.permanent_session_lifetime = timedelta(hours=24)
         print('request!!')
-        record_http_request(datetime.now(), cw_client, instanceId)
+        record_http_request(datetime.now(), instanceId, cw_client)
     # Initialize Plugins
     db.init_app(app)
     Bootstrap(app)
