@@ -3,6 +3,8 @@ __author__ = 'victor cheng'
 import boto3
 import threading
 import os
+from celery import Celery
+from config import config
 from datetime import timedelta
 from flask import Flask, render_template, jsonify, session
 from flask_login import LoginManager
@@ -17,6 +19,7 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 s3 = boto3.resource('s3')
 cw_client = boto3.client('cloudwatch', region_name='us-east-1')
+celery = Celery(app.name, broker=config.CELERY_BROKER_URL)
 net, LABELS, COLORS = init_yolo()
 lock = threading.Lock()
 instanceId = os.popen('ec2metadata --instance-id').read().strip()
@@ -25,7 +28,7 @@ print(instanceId)
 def create_app():
     app = Flask(__name__)
     app.config.from_object('config.config')
-
+    celery.conf.update(app.config)
     @app.before_request
     def before_request():
         session.permanent = True

@@ -6,4 +6,4 @@ SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}/{}'.format(DB_MASTER, DB_PAS
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SECRET_KEY = "ODWA"
 IMAGE_URL_PREFIX = 'https://odwa.s3.amazonaws.com/'
-
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
