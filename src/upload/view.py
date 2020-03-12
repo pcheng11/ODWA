@@ -3,7 +3,6 @@ from datetime import datetime
 from flask import Blueprint, request, session, url_for, render_template, redirect, flash, session
 from flask_login import login_required, current_user, login_user, logout_user
 from src import s3, db
-from src.util import record_http_request
 from werkzeug.security import generate_password_hash, check_password_hash
 from yolo.detect import detect
 from ..models import Photo
@@ -23,7 +22,6 @@ ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'}
 @upload_blueprint.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
-    record_http_request(datetime.now(), '/upload')
     success = False
     pic_path = None
     detected_pic_path = None

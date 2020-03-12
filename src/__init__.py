@@ -13,26 +13,29 @@ from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from flask_session import Session
 from yolo.yolo import init_yolo
+from src.util import record_http_request
+
 
 app = Flask(__name__)
 db = SQLAlchemy()
 login_manager = LoginManager()
 s3 = boto3.resource('s3')
 cw_client = boto3.client('cloudwatch', region_name='us-east-1')
-celery = Celery(app.name, broker=config.CELERY_BROKER_URL)
 net, LABELS, COLORS = init_yolo()
 lock = threading.Lock()
 instanceId = os.popen('ec2metadata --instance-id').read().strip()
 print(instanceId)
 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object('config.config')
-    celery.conf.update(app.config)
     @app.before_request
     def before_request():
         session.permanent = True
         app.permanent_session_lifetime = timedelta(hours=24)
+        print('request!!')
+        record_http_request(datetime.now())
     # Initialize Plugins
     db.init_app(app)
     Bootstrap(app)
@@ -43,7 +46,7 @@ def create_app():
         from .users.view import user_blueprint
         from .upload.view import upload_blueprint
         from .api.api import api_blueprint
-        
+
         # register blueprints
         app.register_blueprint(landing_blueprint)
         app.register_blueprint(user_blueprint, url_prefix='/users')
